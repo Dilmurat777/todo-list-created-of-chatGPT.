@@ -1,10 +1,12 @@
 import './App.css';
+import AddTodoForm from './components/addTodoForm';
 
 function App() {
 
   return (
-   <div>
-    <h2 className="text-3xl font-bold underline">Hello</h2>
+   <div className='max-w-xl mx-auto'>
+      <h2 className="text-2xl font-bold mb-4">📝 Todo List</h2>
+      <AddTodoForm />
    </div>
   );
 }
