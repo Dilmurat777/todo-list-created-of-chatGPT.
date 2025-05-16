@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateTodo, deleteTodo, toggleStatus } from '../features/todos/todoSlice';
 import toast from 'react-hot-toast';
+import useDarkMode from '../hooks/useDarkMode';
 
 export default function AddList() {
-  const tasks = useSelector((state) => state.todos.tasks);
   const dispatch = useDispatch();
-
+  const { theme, toggleTheme } = useDarkMode();
+  const tasks = useSelector((state) => state.todos.tasks);
   const [editingId, setEditingId] = useState(null);
   const [editedTitle, setEditedTitle] = useState('');
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const tasksPerPage = 5;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, statusFilter]);
 
   if (!tasks.length) {
     return <p className="text-center text-gray-500">Список пуст</p>;
@@ -21,6 +29,15 @@ export default function AddList() {
     const matchesStatus = statusFilter === 'all' || task.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
+
+  const totalPages = Math.ceil(filteredTasks.length / tasksPerPage);
+
+  const paginatedPage = filteredTasks.slice(
+    (currentPage - 1) * tasksPerPage,
+    currentPage * tasksPerPage,
+  );
+
+  console.log(paginatedPage);
 
   return (
     <div>
@@ -43,11 +60,11 @@ export default function AddList() {
         </select>
       </div>
 
-      {filteredTasks.length === 0 ? (
+      {paginatedPage.length === 0 ? (
         <p className="text-center text-gray-500">Ничего не найдено</p>
       ) : (
         <ul className="space-y-2 m-4">
-          {filteredTasks.map((task) => (
+          {paginatedPage.map((task) => (
             <li
               key={task.id}
               className="flex items-center justify-between mb-4 bg-gray-100 p-3 rounded-md">
@@ -88,7 +105,10 @@ export default function AddList() {
                 )}
 
                 <button
-                  onClick={() => { dispatch(toggleStatus(task.id)); toast.success('Статус изменён')}}
+                  onClick={() => {
+                    dispatch(toggleStatus(task.id));
+                    toast.success('Статус изменён');
+                  }}
                   className="text-green-400 hover:underline">
                   Статус
                 </button>
@@ -104,6 +124,30 @@ export default function AddList() {
             </li>
           ))}
         </ul>
+      )}
+
+      {totalPages > 1 && (
+        <div
+          className={`flex items-center justify-center gap-4 mt-4 ${
+            theme === 'dark' ? 'text-white' : 'text-black'
+          }`}>
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="text-slate-600 px-2 py-1 bg-gray-200 rounded disabled:opacity-50">
+            ← Назад
+          </button>
+          <span>
+            {currentPage} из {totalPages}
+          </span>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="text-slate-600 px-2 py-1 bg-gray-200 rounded disabled:opacity-50">
+            {' '}
+            Вперёд →
+          </button>
+        </div>
       )}
     </div>
   );
