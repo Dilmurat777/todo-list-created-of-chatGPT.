@@ -1,8 +1,8 @@
 import { Toaster } from 'react-hot-toast';
 import AddList from './components/AddList';
-import AddTodoForm from './components/addTodoForm';
+import AddTodoForm from './components/AddTodoForm';
 import useDarkMode from './hooks/useDarkMode';
-import { useEffect } from 'react';
+
 
 function App() {
   const { theme, toggleTheme } = useDarkMode();
