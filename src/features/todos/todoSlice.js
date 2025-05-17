@@ -25,13 +25,14 @@ export const todoSlice = createSlice({
       reducer: (state, action) => {
         state.tasks.push(action.payload);
       },
-      prepare: (title) => {
+      prepare: (title, priority = 'medium') => {
         return {
           payload: {
             id: Date.now(),
             title,
             status: 'new',
             createAt: new Date().toISOString(),
+            priority,
           },
         };
       },

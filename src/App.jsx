@@ -2,9 +2,11 @@ import { Toaster } from 'react-hot-toast';
 import AddList from './components/AddList';
 import AddTodoForm from './components/addTodoForm';
 import useDarkMode from './hooks/useDarkMode';
+import { useEffect } from 'react';
 
 function App() {
   const { theme, toggleTheme } = useDarkMode();
+
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-800 text-black">
