@@ -6,7 +6,7 @@ import useDarkMode from '../hooks/useDarkMode';
 
 export default function AddList() {
   const dispatch = useDispatch();
-  const { theme, toggleTheme } = useDarkMode();
+  const { theme} = useDarkMode();
   const tasks = useSelector((state) => state.todos.tasks);
   const [editingId, setEditingId] = useState(null);
   const [editedTitle, setEditedTitle] = useState('');
@@ -37,7 +37,6 @@ export default function AddList() {
     currentPage * tasksPerPage,
   );
 
-  console.log(paginatedPage);
 
   return (
     <div>

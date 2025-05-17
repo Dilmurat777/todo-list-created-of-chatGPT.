@@ -7,8 +7,7 @@ export default function AddTodoForm() {
   const tasks = useSelector((state) => state.todos.tasks);
   const [title, setTitle] = useState('');
   const dispatch = useDispatch();
-  console.log(tasks);
-  // console.log(title);
+
 
   const handleAddTodo = (e) => {
     e.preventDefault();
