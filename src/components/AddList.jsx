@@ -63,7 +63,7 @@ export default function AddList() {
       {paginatedPage.length === 0 ? (
         <p className="text-center text-gray-500">Ничего не найдено</p>
       ) : (
-        <ul className="space-y-2 m-4">
+        <ul className="space-y-2 m-2 mx-2 sm:mx-4">
           <AnimatePresence>
             {paginatedPage.map((task) => (
               <motion.li

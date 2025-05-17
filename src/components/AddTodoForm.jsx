@@ -31,7 +31,7 @@ export default function AddTodoForm() {
   };
 
   return (
-    <form onSubmit={handleAddTodo} className="flex gap-2 my-4">
+    <form onSubmit={handleAddTodo} className="flex flex-col sm:flex-row gap-2 my-4">
       <input
         className="border p-2 flex-1 rounded-sm"
         type="text"

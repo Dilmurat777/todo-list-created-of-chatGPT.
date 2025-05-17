@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-800 text-black">
-      <div className="max-w-xl mx-auto p-4 ">
+      <div className="container py-2 sm:px-4 max-w-xl mx-auto p-4 ">
         <div className="flex justify-between items-center">
           <h2
             className={`${theme === 'dark' ? 'text-white' : 'text-black'} text-2xl font-bold mb-4`}>
